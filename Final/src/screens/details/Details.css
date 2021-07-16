@@ -1,0 +1,32 @@
+.flex-containerDetail {
+    display: flex;
+    margin: 0px;
+}
+
+
+
+.child1 {
+    flex: 20%;
+    margin: 24px;
+    text-align: center;
+    margin-top: 0px;
+
+}
+
+.child2 {
+    flex: 60%;
+    margin: 24px;
+    margin-top: 0px;
+
+}
+
+.child3 {
+    flex: 20%;
+    margin: 24px;
+    margin-top: 0px;
+}
+
+.child1Img {
+    width: 100%;
+}
+
