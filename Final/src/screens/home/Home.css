@@ -1,0 +1,34 @@
+.upcomingMoviesBar {
+    background: #ff9999;
+    height: 20px;
+    padding: 8px;
+    text-align: center;
+    color: black;
+    font-size: 1rem;
+}
+
+.flex-container {
+    display: flex;
+    margin: 16px;
+}
+
+.flex-child {
+    
+    border: 2px solid yellow;
+}  
+
+.flex-child:first-child {
+    margin-right: 16px;
+} 
+
+.magenta {
+    flex: 76%;
+    margin: 16px;
+
+}
+
+.green {
+    flex: 24%;
+    margin: 16px;
+
+}
