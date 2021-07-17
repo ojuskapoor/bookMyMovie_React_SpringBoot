@@ -12,10 +12,6 @@
     margin: 16px;
 }
 
-.flex-child {
-    
-    border: 2px solid yellow;
-}  
 
 .flex-child:first-child {
     margin-right: 16px;
@@ -31,4 +27,8 @@
     flex: 24%;
     margin: 16px;
 
+}
+
+.filtersCardDiv {
+    padding: 16px;
 }

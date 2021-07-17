@@ -183,9 +183,13 @@ export default function Header({ fromDetails }) {
             if (rawResponse.ok) {
                 setOpenRegisterSuccess(true);
                 setOpenRegisterFailure(false);
+                setOpenLoginFailure(false);
+                setOpenLoginSuccess(false);
             } else {
                 setOpenRegisterSuccess(false);
                 setOpenRegisterFailure(true);
+                setOpenLoginFailure(false);
+                setOpenLoginSuccess(false);
             }
 
         } catch (e) {
