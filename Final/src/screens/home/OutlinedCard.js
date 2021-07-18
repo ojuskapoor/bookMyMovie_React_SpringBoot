@@ -20,6 +20,8 @@ import DateFnsUtils from '@date-io/date-fns';
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 240,
+    maxWidth: 300,
+    float: 'right'
   },
   title: {
     fontSize: 14,
@@ -29,20 +31,6 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '90px'
   }
 }));
-
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
 
 const ITEM_HEIGHT = 80;
 const ITEM_PADDING_TOP = 8;
@@ -56,7 +44,7 @@ const MenuProps = {
 };
 
 
-export default function OutlinedCard({genresData, artistsData}) {
+export default function OutlinedCard({ genresData, artistsData, filterApplyHandler }) {
   const classes = useStyles();
 
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
@@ -67,15 +55,37 @@ export default function OutlinedCard({genresData, artistsData}) {
 
   const [artistName, setArtistName] = React.useState([]);
 
+  const [movieName, setMovieName] = useState({
+    id: 0,
+    moviename: '',
+  });
+
+  const onFilterFormSubmitted = (e) => {
+    e.preventDefault();
+
+    var moviename = null;
+    if (movieName.moviename) {
+      moviename = movieName.moviename;
+    }
+
+    //Get everything from the state and prepare filter object
+    var filter = {
+      moviename: moviename,
+      genres: genreName,
+      artists: artistName,
+      startdate: selectedStartDate,
+      enddate: selectedEndDate
+    }
+
+    filterApplyHandler(filter);
+  }
+
   const handleChangeGenre = (event) => {
     setGenreName(event.target.value);
-    console.log(genreName);
   };
 
   const handleChangeArtist = (event) => {
     setArtistName(event.target.value);
-    console.log(artistName);
-    console.log(genreName);
   };
 
   const handleStartDateChange = (date) => {
@@ -85,7 +95,15 @@ export default function OutlinedCard({genresData, artistsData}) {
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date);
   };
-  
+
+  const inputChangedHandler = (e) => {
+    const state = movieName;
+    state[e.target.name] = e.target.value;
+    setMovieName({ ...state })
+  }
+
+
+  const { moviename } = movieName;
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -93,42 +111,39 @@ export default function OutlinedCard({genresData, artistsData}) {
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           FIND MOVIES BY:
         </Typography>
-        <ValidatorForm className="subscriber-form" >
+        <ValidatorForm onSubmit={onFilterFormSubmitted}>
           <TextValidator
             id="moviename"
             label="Movie Name"
             type="text"
             name="moviename"
-          // onChange={inputChangedHandler}
-          // value={username}
+            onChange={inputChangedHandler}
+            value={moviename}
+            style={{ width: '240px' }}
           >
           </TextValidator>
+          <FormControl >
+            <InputLabel id="demo-mutiple-checkbox-label">Genres</InputLabel>
+            <Select
+              labelId="genres"
+              id="genres"
+              multiple
+              value={genreName}
+              onChange={handleChangeGenre}
+              input={<Input />}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
+              style={{ width: '240px' }}
+            >
+              {genresData.map((item) => (
+                <MenuItem key={item.genre} value={item.genre}>
+                  <Checkbox checked={genreName.indexOf(item.genre) > -1} />
+                  <ListItemText primary={item.genre} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <br />
-          <div style={{ paddingRight: '100px' }}>
-            <FormControl >
-              <InputLabel id="demo-mutiple-checkbox-label">Genres</InputLabel>
-              <Select
-                labelId="genres"
-                id="genres"
-                multiple
-                value={genreName}
-                onChange={handleChangeGenre}
-                input={<Input />}
-                renderValue={(selected) => selected.join(', ')}
-                MenuProps={MenuProps}
-              >
-                {genresData.map((item) => (
-                  <MenuItem key={item.genre} value={item.genre}>
-                    <Checkbox checked={genreName.indexOf(item.genre) > -1} />
-                    <ListItemText primary={item.genre} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-
-          <br />
-
           <FormControl className={classes.formControl}>
             <InputLabel id="demo-mutiple-checkbox-label" className={classes.formControl}>Artists</InputLabel>
             <Select
@@ -140,6 +155,7 @@ export default function OutlinedCard({genresData, artistsData}) {
               input={<Input />}
               renderValue={(selected) => selected.join(', ')}
               MenuProps={MenuProps}
+              style={{ width: '240px' }}
             >
               {artistsData.map((item) => (
                 <MenuItem key={item.first_name} value={item.first_name}>
@@ -150,8 +166,6 @@ export default function OutlinedCard({genresData, artistsData}) {
             </Select>
           </FormControl>
           <br />
-
-
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               disableToolbar
@@ -166,9 +180,9 @@ export default function OutlinedCard({genresData, artistsData}) {
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
+              style={{ width: '240px' }}
             />
           </MuiPickersUtilsProvider>
-
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               disableToolbar
@@ -183,11 +197,11 @@ export default function OutlinedCard({genresData, artistsData}) {
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
+              style={{ width: '240px' }}
             />
           </MuiPickersUtilsProvider>
-
           <br /><br />
-          <Button type="submit" variant="contained" color="primary">APPLY</Button>
+          <Button type="submit" variant="contained" color="primary" style={{ width: '240px' }}>APPLY</Button>
         </ValidatorForm>
       </CardContent>
     </Card>

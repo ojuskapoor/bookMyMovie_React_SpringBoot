@@ -1,7 +1,6 @@
 import React, { Component, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import mainLogo from '../../assets/logo.svg';
 import { Button } from '@material-ui/core';
-import BookShow from '../../screens/bookshow/BookShow';
 import './Header.css';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { Link, useHistory } from 'react-router-dom';
 
 
 
@@ -94,8 +94,6 @@ export default function Header({ fromDetails }) {
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
     const [value, setValue] = React.useState(0);
-
-    const loginButtonText = "Login";
 
     const [open, setOpen] = React.useState(false);
 
@@ -198,6 +196,15 @@ export default function Header({ fromDetails }) {
 
     }
 
+    const history=useHistory();
+
+    const handleBookShow = () => {
+        if (isLoggedIn) {
+            //history.push("/bookshow")
+        } else {
+            setOpen(true);
+        }
+    };
 
     const handleOpen = () => {
         setOpen(true);
@@ -478,7 +485,7 @@ export default function Header({ fromDetails }) {
             }
 
             {fromDetails
-                ? <Button variant="contained" color="primary" onClick={() => BookShow()}>Book Show</Button>
+                ? <Button variant="contained" color="primary" onClick={handleBookShow}>Book Show</Button>
                 : <span></span>
             }
 

@@ -10,7 +10,28 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
 
 
     const [artistsDataList, setArtistsDataList] = useState([]);
+
     const [genresDataList, setGenresDataList] = useState([]);
+
+    const [selectedFilters, setSelectedFilters] = useState();
+
+    //make a state to set/update filters and send those filters to TitlebarImageList as props
+
+
+    var publishedMoviesDataList = moviesDataList.filter(function (el) {
+        return el.status == "PUBLISHED";
+    });
+    var releasedMoviesDataList = moviesDataList.filter(function (el) {
+        return el.status == "RELEASED";
+    });
+
+    async function movieClickHandler(movieDetail) {
+        detailsPageHandler(movieDetail);
+    }
+
+    async function filterApplyHandler(filterDetails) {
+        setSelectedFilters(filterDetails);
+    }
 
     async function loadGenresAndArtistsData() {
 
@@ -27,16 +48,6 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
         loadGenresAndArtistsData();
     }, [])
 
-    var publishedMoviesDataList = moviesDataList.filter(function (el) {
-        return el.status == "PUBLISHED";
-    });
-    var releasedMoviesDataList = moviesDataList.filter(function (el) {
-        return el.status == "RELEASED";
-    });
-
-    async function movieClickHandler(movieDetail) {
-        detailsPageHandler(movieDetail);
-    }
 
     return (
         <Fragment>
@@ -51,11 +62,11 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
 
             <div className="flex-container">
                 <div className="flex-child magenta">
-                    <TitlebarImageList moviesDataList={releasedMoviesDataList} movieClickHandler={(movieDetail) => movieClickHandler(movieDetail)} />
+                    <TitlebarImageList moviesDataList={releasedMoviesDataList} selectedFilters={selectedFilters} movieClickHandler={(movieDetail) => movieClickHandler(movieDetail)} />
                 </div>
                 <div className="flex-child green">
                     <div className="filtersCardDiv">
-                        <Card genresData={genresDataList} artistsData={artistsDataList}/>
+                        <Card genresData={genresDataList} artistsData={artistsDataList} filterApplyHandler={(filterDetails) => filterApplyHandler(filterDetails)} />
                     </div>
                 </div>
             </div>
