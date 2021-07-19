@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Header from "../../common/header/Header";
 import './Home.css';
 import SingleLineImageList from './SingleLineImageList';
@@ -19,10 +19,10 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
 
 
     var publishedMoviesDataList = moviesDataList.filter(function (el) {
-        return el.status == "PUBLISHED";
+        return el.status === "PUBLISHED";
     });
     var releasedMoviesDataList = moviesDataList.filter(function (el) {
-        return el.status == "RELEASED";
+        return el.status === "RELEASED";
     });
 
     async function movieClickHandler(movieDetail) {

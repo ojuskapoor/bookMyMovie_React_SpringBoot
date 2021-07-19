@@ -1,9 +1,10 @@
-import React, { Component, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './home/Home';
 import Details from './details/Details';
 import BookShow from './bookshow/BookShow'
 
+//Controller is the First JS file that is called from Index.js and governs the pages and routing.
 export default function Controller() {
 
     const [moviesDataList, setMoviesDataList] = useState([]);
@@ -29,11 +30,9 @@ export default function Controller() {
     return (
         <Fragment>
             <Router>
-                <div>
                     <Route exact path="/" render={(props) => <Home {...props} moviesDataList={moviesDataList} detailsPageHandler={(movieDetail) => detailsPageHandler(movieDetail)} />} />
                     <Route exact path="/details" render={(props) => <Details {...props} movieDetailJSON={movieDetailJSON} />} />
                     <Route path="/bookshow" render={({ history }, props) => <BookShow {...props}  />} />
-                </div>
             </Router>
         </Fragment>
     )

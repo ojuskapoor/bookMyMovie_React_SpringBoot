@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import mainLogo from '../../assets/logo.svg';
 import { Button } from '@material-ui/core';
 import './Header.css';
@@ -15,8 +15,6 @@ import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { Link, useHistory } from 'react-router-dom';
-
 
 
 
@@ -148,6 +146,7 @@ export default function Header({ fromDetails }) {
                     },
                 }
             );
+            auth = rawResponse;
         } catch (e) {
         }
     }
@@ -155,14 +154,13 @@ export default function Header({ fromDetails }) {
     async function callRegisterAPI(userRegisterForm) {
         try {
 
-            const bodyJSON = {
+            var bodyJSON = {
                 "email_address": userRegisterForm.email,
                 "first_name": userRegisterForm.firstname,
                 "last_name": userRegisterForm.lastname,
                 "mobile_number": userRegisterForm.contact,
                 "password": userRegisterForm.key
             };
-
 
             const rawResponse = await fetch("http://localhost:8085/api/v1/signup",
                 {
@@ -176,7 +174,7 @@ export default function Header({ fromDetails }) {
                 }
             );
 
-            const data = await rawResponse.json();
+            bodyJSON = await rawResponse.json();
 
             if (rawResponse.ok) {
                 setOpenRegisterSuccess(true);
@@ -195,8 +193,6 @@ export default function Header({ fromDetails }) {
         }
 
     }
-
-    const history=useHistory();
 
     const handleBookShow = () => {
         if (isLoggedIn) {
@@ -295,8 +291,8 @@ export default function Header({ fromDetails }) {
                     <Tab label="REGISTER" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
-            <TabPanel value={value} index={0}>
-                <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
+                <TabPanel value={value} index={0}>
                     <ValidatorForm className="subscriber-form" onSubmit={onLoginFormSubmitted}>
                         <TextValidator
                             id="username"
@@ -342,7 +338,7 @@ export default function Header({ fromDetails }) {
                             }
                         >
                             Sucessfully logged in
-                    </Alert>
+                        </Alert>
                     </Collapse>
                     <Collapse in={openLoginFailure}>
                         <Alert
@@ -361,10 +357,10 @@ export default function Header({ fromDetails }) {
                             severity="error"
                         >
                             Eh Oh! Please check the credentials and try again.
-                    </Alert>
+                        </Alert>
                     </Collapse>
-                </div>
-            </TabPanel>
+                </TabPanel>
+            </div>
 
             <TabPanel value={value} index={1}>
                 <div style={{ textAlign: 'center' }}>
@@ -448,7 +444,7 @@ export default function Header({ fromDetails }) {
                             }
                         >
                             Registration Successful. Please Login!
-                    </Alert>
+                        </Alert>
                     </Collapse>
                     <Collapse in={openRegisterFailure}>
                         <Alert
@@ -467,11 +463,10 @@ export default function Header({ fromDetails }) {
                             severity="error"
                         >
                             Eh Oh! Please check the details and try again.
-                    </Alert>
+                        </Alert>
                     </Collapse>
                 </div>
             </TabPanel>
-
         </div>
     );
 
