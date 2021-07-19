@@ -30,9 +30,9 @@ export default function Controller() {
     return (
         <Fragment>
             <Router>
-                    <Route exact path="/" render={(props) => <Home {...props} moviesDataList={moviesDataList} detailsPageHandler={(movieDetail) => detailsPageHandler(movieDetail)} />} />
-                    <Route exact path="/details" render={(props) => <Details {...props} movieDetailJSON={movieDetailJSON} />} />
-                    <Route path="/bookshow" render={({ history }, props) => <BookShow {...props}  />} />
+                <Route exact path="/" render={(props) => <Home {...props} moviesDataList={moviesDataList} detailsPageHandler={(movieDetail) => detailsPageHandler(movieDetail)} />} />
+                <Route exact path="/details" render={(props) => <Details {...props} movieDetailJSON={movieDetailJSON} />} />
+                <Route path="/bookshow" render={({ history }, props) => <BookShow {...props} />} />
             </Router>
         </Fragment>
     )

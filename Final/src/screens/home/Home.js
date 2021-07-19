@@ -13,9 +13,9 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
 
     const [genresDataList, setGenresDataList] = useState([]);
 
+    //A state to set/update filters and send those filters to TitlebarImageList as props
     const [selectedFilters, setSelectedFilters] = useState();
 
-    //make a state to set/update filters and send those filters to TitlebarImageList as props
 
 
     var publishedMoviesDataList = moviesDataList.filter(function (el) {
@@ -51,7 +51,6 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
 
     return (
         <Fragment>
-
             <Header fromDetails={false} />
             <div className="upcomingMoviesBar">
                 Upcoming Movies
@@ -59,7 +58,6 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
             <div>
                 <SingleLineImageList moviesDataList={publishedMoviesDataList} />
             </div>
-
             <div className="flex-container">
                 <div className="flex-child magenta">
                     <TitlebarImageList moviesDataList={releasedMoviesDataList} selectedFilters={selectedFilters} movieClickHandler={(movieDetail) => movieClickHandler(movieDetail)} />
@@ -70,7 +68,6 @@ export default function Home({ moviesDataList, detailsPageHandler }) {
                     </div>
                 </div>
             </div>
-
         </Fragment>
     )
 }

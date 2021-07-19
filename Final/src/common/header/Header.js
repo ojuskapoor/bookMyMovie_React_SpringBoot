@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import mainLogo from '../../assets/logo.svg';
 import { Button } from '@material-ui/core';
@@ -8,31 +9,33 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Container from '@material-ui/core/Container';
 
 
 
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index, classes, ...other } = props;
 
     return (
         <div
             role="tabpanel"
             hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
             {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
+                <Container>
+                    <Box>
+                        {children}
+                    </Box>
+                </Container>
             )}
         </div>
     );
@@ -216,6 +219,10 @@ export default function Header({ fromDetails }) {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        setOpenLoginSuccess(false);
+        setOpenLoginFailure(false);
+        setOpenRegisterSuccess(false);
+        setOpenRegisterFailure(false);
     };
 
     const [userLoginForm, setUserLoginForm] = useState({
@@ -293,6 +300,7 @@ export default function Header({ fromDetails }) {
             </AppBar>
             <div style={{ textAlign: 'center' }}>
                 <TabPanel value={value} index={0}>
+                    <br/>
                     <ValidatorForm className="subscriber-form" onSubmit={onLoginFormSubmitted}>
                         <TextValidator
                             id="username"
@@ -319,51 +327,50 @@ export default function Header({ fromDetails }) {
                         <br /><br />
                         <Button type="submit" variant="contained" color="primary">LOGIN</Button>
                     </ValidatorForm>
-
                     <br />
-                    <Collapse in={openLoginSuccess}>
-                        <Alert
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        setOpenLoginSuccess(false);
-                                        setOpen(false);
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                        >
-                            Sucessfully logged in
-                        </Alert>
-                    </Collapse>
-                    <Collapse in={openLoginFailure}>
-                        <Alert
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        setOpenLoginFailure(false);
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            severity="error"
-                        >
-                            Eh Oh! Please check the credentials and try again.
-                        </Alert>
-                    </Collapse>
                 </TabPanel>
+                <Collapse in={openLoginSuccess}>
+                    <Alert
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpenLoginSuccess(false);
+                                    setOpen(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    >
+                        Sucessfully logged in
+                    </Alert>
+                </Collapse>
+                <Collapse in={openLoginFailure}>
+                    <Alert
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setOpenLoginFailure(false);
+                                }}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                        severity="error"
+                    >
+                        Eh Oh! Please check the credentials and try again.
+                    </Alert>
+                </Collapse>
             </div>
-
             <TabPanel value={value} index={1}>
                 <div style={{ textAlign: 'center' }}>
+                    <br/>
                     <ValidatorForm className="subscriber-form" onSubmit={onRegisterFormSubmitted}>
                         <TextValidator
                             id="firstname"
@@ -426,75 +433,70 @@ export default function Header({ fromDetails }) {
                         <br /><br />
                         <Button type="submit" variant="contained" color="primary">REGISTER</Button>
                     </ValidatorForm>
-
                     <br />
-                    <Collapse in={openRegisterSuccess}>
-                        <Alert
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        setOpenRegisterSuccess(false);
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                        >
-                            Registration Successful. Please Login!
-                        </Alert>
-                    </Collapse>
-                    <Collapse in={openRegisterFailure}>
-                        <Alert
-                            action={
-                                <IconButton
-                                    aria-label="close"
-                                    color="inherit"
-                                    size="small"
-                                    onClick={() => {
-                                        setOpenLoginFailure(false);
-                                    }}
-                                >
-                                    <CloseIcon fontSize="inherit" />
-                                </IconButton>
-                            }
-                            severity="error"
-                        >
-                            Eh Oh! Please check the details and try again.
-                        </Alert>
-                    </Collapse>
                 </div>
             </TabPanel>
+            <Collapse in={openRegisterSuccess}>
+                <Alert
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpenRegisterSuccess(false);
+                                setValue(0);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                >
+                    Registration Successful. Please Login!
+                </Alert>
+            </Collapse>
+            <Collapse in={openRegisterFailure}>
+                <Alert
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpenLoginFailure(false);
+                                setOpenRegisterFailure(false);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    severity="error"
+                >
+                    Eh Oh! Please check the details and try again.
+                </Alert>
+            </Collapse>
         </div>
     );
 
     return (
         <div className="header">
             <img src={mainLogo} alt="Site Logo" />
-
             {isLoggedIn
                 ? <Button variant="contained" onClick={handleLogout}>LOGOUT</Button>
                 : <Button variant="contained" onClick={handleOpen}>LOGIN</Button>
             }
-
             {fromDetails
                 ? <Button variant="contained" color="primary" onClick={handleBookShow}>Book Show</Button>
                 : <span></span>
             }
-
-            <div>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                >
-                    {body}
-                </Modal>
-            </div>
-
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                {body}
+            </Modal>
         </div>
     );
 }

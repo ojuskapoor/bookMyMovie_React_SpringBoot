@@ -1,5 +1,5 @@
-import React, {useState } from 'react';
-import { makeStyles} from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -181,6 +181,9 @@ export default function OutlinedCard({ genresData, artistsData, filterApplyHandl
                 'aria-label': 'change date',
               }}
               style={{ width: '240px' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </MuiPickersUtilsProvider>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -198,6 +201,9 @@ export default function OutlinedCard({ genresData, artistsData, filterApplyHandl
                 'aria-label': 'change date',
               }}
               style={{ width: '240px' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </MuiPickersUtilsProvider>
           <br /><br />
